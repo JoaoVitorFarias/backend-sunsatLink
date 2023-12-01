@@ -8,8 +8,6 @@ from presentation.controller.resource.satellite_resource import SatelliteResourc
 from presentation.controller.resource.satellite_trajectory_resource import SatelliteTrajectoryResource
 from presentation.controller.resource.satellite_with_position_resource import SatelliteWithPositionResource
 from presentation.controller.resource.satellite_with_positions_resource import SatelliteWithPositionsResource
-from isodate import parse_duration
-
 
 def convertToSatelliteResource(satellite: Satellite):
     return SatelliteResource(
@@ -51,7 +49,7 @@ def convertToSatellite(resource: SatelliteResource):
 
 def convertToSatelliteTrajectoryResource(satellite: SatelliteTrajectory):
     return SatelliteTrajectoryResource(
-        time= int(parse_duration(satellite.time)),
+        time= int(satellite.time.total_seconds()),
         azimuth= satellite.azimuth,
         elevation= satellite.elevation
     )
