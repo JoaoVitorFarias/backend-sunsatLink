@@ -8,6 +8,7 @@ from presentation.controller.resource.satellite_resource import SatelliteResourc
 from presentation.controller.resource.satellite_trajectory_resource import SatelliteTrajectoryResource
 from presentation.controller.resource.satellite_with_position_resource import SatelliteWithPositionResource
 from presentation.controller.resource.satellite_with_positions_resource import SatelliteWithPositionsResource
+from isodate import parse_duration
 
 
 def convertToSatelliteResource(satellite: Satellite):
@@ -61,7 +62,7 @@ def convertToSatelliteLog(resource: SatelliteLog):
         name = resource.name,
         is_favorite = resource.is_favorite,
         id_provider = str(resource.id_provider),
-        time = resource.time
+        time = int(parse_duration(resource.time))
     )
 
     return data
