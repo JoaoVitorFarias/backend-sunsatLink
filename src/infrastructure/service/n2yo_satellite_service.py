@@ -44,7 +44,7 @@ class N2yoSatelliteService:
                 elevation = data['positions'][i]['elevation'],
                 ra = data['positions'][i]['ra'],
                 dec = data['positions'][i]['dec'],
-                timestamp = data['positions'][i]['timestamp']
+                timestamp = str(data['positions'][i]['timestamp'])
             ))
         
         satellite.positions = positions
