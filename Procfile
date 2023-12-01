@@ -1,1 +1,1 @@
-web: gunicorn -k uvicorn.workers.UvicornWorker --log-level debug src.main:app
+web: gunicorn -k uvicorn.workers.UvicornWorker -b 0.0.0.0:$PORT -w 4 src.main:app
