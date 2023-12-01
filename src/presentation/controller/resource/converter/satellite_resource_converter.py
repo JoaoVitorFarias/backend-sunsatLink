@@ -23,7 +23,7 @@ def convertToSatelliteWithPositionResource(satellite: SatelliteWithPositionModel
         id = satellite.id if hasattr(satellite, 'id') else None,
         name = satellite.name,
         is_favorite = satellite.is_favorite,
-        id_provider = satellite.id_provider if hasattr(satellite, 'id_provider') else None,
+        id_provider = str(satellite.id_provider),
         longitude = satellite.longitude,
         latitude = satellite.latitude,
         altitude = satellite.altitude
