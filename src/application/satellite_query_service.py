@@ -63,7 +63,7 @@ class SatelliteQueryService():
         log.id_provider = satellite.id_provider
         log.name = satellite.name
         log.is_favorite = satellite.is_favorite
-        log.time = datetime.datetime.now()
+        log.time = datetime.now()
 
         self.__log_repository__.save(log)
 
