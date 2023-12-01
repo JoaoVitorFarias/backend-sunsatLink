@@ -5,4 +5,4 @@ class SatelliteResource(BaseModel):
     id: Optional[str]
     name: str
     is_favorite: bool
-    id_provider: str
+    id_provider: Optional[str]
