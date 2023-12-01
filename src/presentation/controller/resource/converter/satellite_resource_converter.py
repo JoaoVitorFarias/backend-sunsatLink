@@ -15,7 +15,7 @@ def convertToSatelliteResource(satellite: Satellite):
         id=satellite.id,
         name=satellite.name,
         is_favorite=satellite.is_favorite,
-        id_provider=satellite.id_provider
+        id_provider=str(satellite.id_provider)
     )
 
 def convertToSatelliteWithPositionResource(satellite: SatelliteWithPositionModel):
@@ -34,7 +34,7 @@ def convertToSatelliteWithPositionsResource(satellite: SatelliteWithPositionsMod
         id = satellite.id if hasattr(satellite, 'id') else None,
         name = satellite.name,
         is_favorite = satellite.is_favorite,
-        id_provider = satellite.id_provider,
+        id_provider = str(satellite.id_provider),
         positions = satellite.positions
     )
 
@@ -44,7 +44,7 @@ def convertToSatellite(resource: SatelliteResource):
     data.id = resource.id
     data.name = resource.name
     data.is_favorite = resource.is_favorite
-    data.id_provider = resource.id_provider
+    data.id_provider = str(resource.id_provider)
 
     return data
 
@@ -60,7 +60,7 @@ def convertToSatelliteLog(resource: SatelliteLog):
         id = resource.id,
         name = resource.name,
         is_favorite = resource.is_favorite,
-        id_provider = resource.id_provider,
+        id_provider = str(resource.id_provider),
         time = resource.time
     )
 
