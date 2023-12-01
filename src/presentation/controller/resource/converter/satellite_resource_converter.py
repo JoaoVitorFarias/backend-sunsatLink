@@ -51,7 +51,7 @@ def convertToSatellite(resource: SatelliteResource):
 
 def convertToSatelliteTrajectoryResource(satellite: SatelliteTrajectory):
     return SatelliteTrajectoryResource(
-        time= satellite.time,
+        time= int(parse_duration(satellite.time)),
         azimuth= satellite.azimuth,
         elevation= satellite.elevation
     )
@@ -62,7 +62,7 @@ def convertToSatelliteLog(resource: SatelliteLog):
         name = resource.name,
         is_favorite = resource.is_favorite,
         id_provider = str(resource.id_provider),
-        time = int(parse_duration(resource.time))
+        time = resource.time
     )
 
     return data
