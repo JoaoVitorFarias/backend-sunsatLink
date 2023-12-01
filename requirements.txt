@@ -16,7 +16,6 @@ requests
 psycopg2-binary
 PyJWT
 gunicorn==20.1.0
-Pipfile
 
 
 
