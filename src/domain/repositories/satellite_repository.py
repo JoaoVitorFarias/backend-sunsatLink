@@ -1,4 +1,5 @@
 from domain.entities.satellite import Satellite
+# from domain.repositories.satellite_trajectory_repository import SatelliteTrajectoryRepository
 from typing import Optional, Protocol, runtime_checkable
 
 @runtime_checkable

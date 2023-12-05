@@ -1,3 +1,4 @@
+import uuid
 from domain.entities.antenna_position import AntennaPosition
 from domain.repositories.antenna_repository import AntennaRepository as BaseRepository
 from sqlalchemy.orm import Session
@@ -53,6 +54,22 @@ class AntennaRepository:
             list_data.append(antenna)
 
         return list_data
+    
+    def find_first(self) -> Optional[AntennaPosition]:
+        session = self.database()
+        data = session.query(AntennaDb).first()
+        if not data:
+            return None
+        
+        antenna = AntennaPosition(
+            id = data.id,
+            latitude = data.latitude,
+            altitude = data.altitude,
+            longitude = data.longitude,
+            azimuth = data.azimuth,
+            elevation = data.elevation
+        )
+        return antenna
 
 assert isinstance(AntennaRepository(
     {}), BaseRepository)

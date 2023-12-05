@@ -1,3 +1,4 @@
+import datetime
 from application.model.satellite_log import SatelliteLog
 from application.model.satellite_trajectory import SatelliteTrajectory
 from application.model.satellite_with_position_model import SatelliteWithPositionModel
@@ -49,9 +50,10 @@ def convertToSatellite(resource: SatelliteResource):
 
 def convertToSatelliteTrajectoryResource(satellite: SatelliteTrajectory):
     return SatelliteTrajectoryResource(
-        time= int(satellite.time.total_seconds()),
+        time=  satellite.time,
         azimuth= satellite.azimuth,
-        elevation= satellite.elevation
+        elevation= satellite.elevation,
+        movimentationCommand = satellite.movimentation_command
     )
 
 def convertToSatelliteLog(resource: SatelliteLog):

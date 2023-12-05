@@ -24,17 +24,16 @@ def get_all_by_category(category_id: str,
     return list(map(lambda sat: convertToSatelliteWithPositionResource(sat), satellites))[skip:limit]
 
 @router_satellite.get("/favorite/")
-def get_all_favorite(page: int = Query(1, alias="page"), 
-                     offset: int = Query(10, alias="offset")):
+def get_all_favorite(page: int = Query(1, alias="page"), offset: int = Query(10, alias="offset")):
     skip = (page - 1) * offset
     limit = skip + offset
     satellites = satellite_query_service.find_all_is_favorite()
 
     return list(map(lambda sat: convertToSatelliteResource(sat), satellites))[skip:limit]
 
-@router_satellite.get("/provider/{id_provider}")
-def get_by_id(id_provider: str):
-    satellite = satellite_query_service.find_by_id_provider(id_provider)
+@router_satellite.get("/provider/{id_provider}/{movimentation_command}")
+def get_by_id(id_provider: str, movimentation_command: int):
+    satellite = satellite_query_service.find_by_id_provider(id_provider, movimentation_command)
 
     if not satellite:
         raise HTTPException(
@@ -77,3 +76,10 @@ def get_monitoring_log(
         return log
     
     return list(map(lambda sat: convertToSatelliteLog(sat), log))[skip:limit]
+
+
+@router_satellite.get("/positions/{id_provider}")
+def get_positions(id_provider: str):
+    positions = satellite_query_service.find_positions(id_provider)
+    
+    return positions

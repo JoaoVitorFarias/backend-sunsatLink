@@ -8,3 +8,6 @@ class AntennaRepository(Protocol):
 
     def find_position(self) -> list[AntennaPosition]:
         ...
+    
+    def find_first(self) -> Optional[AntennaPosition]:
+        ...

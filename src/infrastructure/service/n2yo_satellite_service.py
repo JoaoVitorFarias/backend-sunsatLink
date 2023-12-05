@@ -53,6 +53,9 @@ class N2yoSatelliteService:
     def mapToSatelliteWithPositionModel(self, response) -> list[SatelliteWithPositionModel]:
         data = response.json()
         satellites = []
+
+        if not data:
+            return satellites
         
         for sat in data['above']:
             satellite = SatelliteWithPositionModel()

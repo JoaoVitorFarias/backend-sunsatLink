@@ -14,4 +14,3 @@ class AntennaDb(Base):
     altitude  = Column(Numeric, nullable=False)
     azimuth = Column(Numeric, nullable=False)
     elevation = Column(Numeric, nullable=False)
-

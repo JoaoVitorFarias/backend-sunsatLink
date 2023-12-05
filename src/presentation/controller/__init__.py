@@ -3,6 +3,7 @@ from infrastructure.repositories.monitoring_log_repository import MonitoringLogR
 from infrastructure.repositories.monitoring_repository import MonitoringRepository
 from infrastructure.repositories.tokens_repository import TokensRepository
 from infrastructure.repositories.user_repository import UserRepository
+from infrastructure.repositories.satellite_trajectory_repository import SatelliteTrajectoryRepository
 from application.satellite_query_service import SatelliteQueryService
 from application.satellite_service import SatelliteService
 from application.antenna_service import AntennaService
@@ -23,6 +24,7 @@ satellite_repository = SatelliteRepository(databaseSessionGenerator)
 monitoring_repository = MonitoringRepository(databaseSessionGenerator)
 log_repository = MonitoringLogRepository(databaseSessionGenerator)
 api_satellite_service = N2yoSatelliteService()
+satellite_trajectory_repository = SatelliteTrajectoryRepository(databaseSessionGenerator)
 antenna_repository = AntennaRepository(databaseSessionGenerator)
 antenna_service = AntennaService(antenna_repository)
 satellite_service = SatelliteService(satellite_repository, monitoring_repository, log_repository)
@@ -30,4 +32,6 @@ satellite_query_service = SatelliteQueryService(satellite_repository,
                                                 api_satellite_service,
                                                 monitoring_repository,
                                                 satellite_service,
-                                                log_repository)
+                                                log_repository,
+                                                satellite_trajectory_repository,
+                                                antenna_repository)
