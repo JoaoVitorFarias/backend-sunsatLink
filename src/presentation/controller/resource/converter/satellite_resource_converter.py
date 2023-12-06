@@ -49,8 +49,13 @@ def convertToSatellite(resource: SatelliteResource):
     return data
 
 def convertToSatelliteTrajectoryResource(satellite: SatelliteTrajectory):
+    if (satellite.time == 0 and satellite.movimentation_command == 1):
+        time = 60
+    else:
+        time = satellite.time
+
     return SatelliteTrajectoryResource(
-        time=  satellite.time,
+        time=  time,
         azimuth= satellite.azimuth,
         elevation= satellite.elevation,
         movimentationCommand = satellite.movimentation_command
