@@ -56,7 +56,7 @@ def find_all(page: int = Query(1, alias="page"),
 
 
 @router_user.get("/{email}", response_model = UserResponse)
-def find_by_email(email : str, current_user: str = Depends(get_current_user)):
+def find_by_email(email : str):
     user = userService.find_by_email(email)
     if not user:
         raise HTTPException(
@@ -66,7 +66,7 @@ def find_by_email(email : str, current_user: str = Depends(get_current_user)):
 
 
 @router_user.put("/{email}", response_model=UserResponse)
-def update_by_email(request: UserRequest, current_user: str = Depends(get_current_user)):
+def update_by_email(request: UserRequest):
     fieldsValidation = userService.validate_user(request)
     if not fieldsValidation['completeStatus']:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=fieldsValidation)
@@ -82,7 +82,7 @@ def update_by_email(request: UserRequest, current_user: str = Depends(get_curren
 
 
 @router_user.delete("/{email}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_user_by_email(email: str, current_user: str = Depends(get_current_user)):
+def delete_user_by_email(email: str):
     if not userService.exists_by_email(email):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
@@ -105,7 +105,7 @@ def update_approval_status(email: str, status: int):
     return UserResponse.from_orm(updated_user)
 
 @router_user.patch("/{email}/promote-to-admin/", response_model=UserResponse)
-def promote_user_to_admin(email: str, current_user: str = Depends(get_current_user)):
+def promote_user_to_admin(email: str):
     user = userService.find_by_email(email)
     
     if not user:
