@@ -1,7 +1,8 @@
+from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from enum import Enum
 from database import Base
-from sqlalchemy import Column, String, Boolean, Numeric
+from sqlalchemy import Column, String, Boolean, Numeric, DateTime
 from sqlalchemy import Column, Enum as EnumDB
 
 class AntennaDb(Base):
@@ -14,3 +15,4 @@ class AntennaDb(Base):
     altitude  = Column(Numeric, nullable=False)
     azimuth = Column(Numeric, nullable=False)
     elevation = Column(Numeric, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)

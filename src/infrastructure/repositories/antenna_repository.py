@@ -39,7 +39,7 @@ class AntennaRepository:
 
     def find_position(self) -> list[AntennaPosition]:
         session = self.database()
-        data = session.query(AntennaDb).all()
+        data = session.query(AntennaDb).order_by(AntennaDb.created_at.desc()).all()
 
         list_data = []
         for pos in data:
