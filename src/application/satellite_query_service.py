@@ -150,7 +150,8 @@ class SatelliteQueryService():
     def start_position(self, satellite: SatelliteWithPositionsModel, trajectory: SatelliteTrajectory) -> SatelliteTrajectory:
         # verificar se chegou na posicao esperada e se chegou colocar o movimentario para 2.
         initial_trajectory = self.__satellite_trajectory_repository__.find_last_antenna_by_command(1)
-        
+        antenna = self.__antenna_repository__.find_first()
+       
         position = satellite.positions[0]
 
         if initial_trajectory:
@@ -160,14 +161,24 @@ class SatelliteQueryService():
                 return self.calculate_trajectory(satellite, trajectory)
                    
         else:
-            trajectory.azimuth = position.azimuth
-            trajectory.elevation = self.calculate_elevation(position.elevation)
-            trajectory.time = int((datetime.utcfromtimestamp(int(position.timestamp))- datetime.now()).total_seconds())
-            trajectory.movimentation_command = 1
+            if not antenna:
+                trajectory.azimuth = position.azimuth
+                trajectory.elevation = self.calculate_elevation(position.elevation)
+                trajectory.time = int((datetime.utcfromtimestamp(int(position.timestamp))- datetime.now()).total_seconds())
+                trajectory.movimentation_command = 1
 
-            self.__satellite_trajectory_repository__.save(trajectory)
+                self.__satellite_trajectory_repository__.save(trajectory)
 
-            return trajectory
+                return trajectory
+            else: 
+                trajectory.azimuth = self.calculate_azimuth(antenna.azimuth, position.azimuth)
+                trajectory.elevation = self.calculate_elevation(position.elevation) - self.calculate_elevation(antenna.elevation)
+                trajectory.time = int((datetime.utcfromtimestamp(int(position.timestamp))- datetime.now()).total_seconds())
+                trajectory.movimentation_command = 1
+
+                self.__satellite_trajectory_repository__.save(trajectory)
+
+                return trajectory
     
     def calculate_trajectory(self, satellite: SatelliteWithPositionsModel, trajectory: SatelliteTrajectory) -> SatelliteTrajectory:
         first_position = satellite.positions[0]
@@ -179,7 +190,8 @@ class SatelliteQueryService():
         timestamp_seconds2 = int(last_position.timestamp)
         time2 = datetime.utcfromtimestamp(timestamp_seconds2)
 
-        trajectory.azimuth = last_position.azimuth - first_position.azimuth
+        trajectory.azimuth = self.calculate_azimuth(first_position.azimuth, last_position.azimuth)
+
         trajectory.elevation = self.calculate_elevation(last_position.elevation) - self.calculate_elevation(first_position.elevation)
         trajectory.time = int((time2 - time1).total_seconds())
         trajectory.movimentation_command = 2
@@ -204,7 +216,12 @@ class SatelliteQueryService():
 
     
     def calculate_elevation(self, x): 
-        return ((-0.0019*(x**2)) + (-0.5126*x) + (26.429)) * 360
+        elevation = ((-0.0019*(x**2)) + (-0.5126*x) + (26.429)) * 360
+
+        if (elevation > 16200 or elevation < -16200):
+            return 0
+        
+        return elevation
     
     def find_positions(self, id_provider: str):
         antenna = self.__antenna_repository__.find_first()
@@ -214,3 +231,18 @@ class SatelliteQueryService():
             satellite = self.__api_satellite_service__.find_by_id(id_provider, antenna.latitude, antenna.longitude, antenna.altitude)
 
         return satellite.positions
+    
+    def calculate_azimuth(self, a, b):
+        delta = abs(b - a)
+
+        menor_distancia = min(delta, 360-delta)
+        if delta <= 180:
+            if b > a:
+                return menor_distancia
+            else:
+                return -menor_distancia
+        else:
+            if b > a:
+                return -menor_distancia
+            else:
+                return menor_distancia
