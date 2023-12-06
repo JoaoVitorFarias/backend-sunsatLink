@@ -14,7 +14,7 @@ class AntennaRepository:
 
     def save_position(self, antenna_position: AntennaPosition) -> AntennaPosition:
         antenna_db = AntennaDb()
-        antenna_db.id = uuid.uuid4().hex
+        antenna_db.id = antenna_position.id
         antenna_db.latitude = antenna_position.latitude
         antenna_db.altitude = antenna_position.altitude
         antenna_db.longitude = antenna_position.longitude
