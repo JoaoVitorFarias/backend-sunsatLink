@@ -44,13 +44,15 @@ class SatelliteTrajectoryRepository:
   def find_first(self) -> Optional[SatelliteTrajectory]:
         session = self.database()
         data = session.query(SatelliteTrajectoryDb).order_by(desc(SatelliteTrajectoryDb.id)).first()
-        trajectory = SatelliteTrajectory()
-        trajectory.time = data.time
-        trajectory.azimuth = data.azimuth
-        trajectory.elevation = data.elevation
-        trajectory.movimentation_command= data.movimentation_command
-        
-        return trajectory
+        if data:
+          trajectory = SatelliteTrajectory()
+          trajectory.time = data.time
+          trajectory.azimuth = data.azimuth
+          trajectory.elevation = data.elevation
+          trajectory.movimentation_command = data.movimentation_command
+          return trajectory
+        else:
+            return None
   
   def delete(self) -> None:
     session = self.database()
