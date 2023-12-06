@@ -80,6 +80,6 @@ def get_monitoring_log(
 
 @router_satellite.get("/positions/{id_provider}")
 def get_positions(id_provider: str):
-    positions = satellite_query_service.find_positions(id_provider)
+    positions = satellite_query_service.find_positions(id_provider)[:30]
     
     return positions
