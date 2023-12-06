@@ -154,7 +154,8 @@ class SatelliteQueryService():
         position = satellite.positions[0]
 
         if initial_trajectory:
-            if int(initial_trajectory.azimuth) == int(position.azimuth) and int(initial_trajectory.elevation) == int(self.calculate_elevation(position.elevation)):
+            if (((int(initial_trajectory.azimuth) - 3) >= int(position.azimuth) and (int(initial_trajectory.azimuth) + 3) <= int(position.azimuth))
+            and ((int(initial_trajectory.elevation) - 3) >= int(self.calculate_elevation(position.elevation)) and (int(initial_trajectory.elevation) + 3) <= int(self.calculate_elevation(position.elevation)))):
                 self.__satellite_trajectory_repository__.delete()
                 return self.calculate_trajectory(satellite, trajectory)
                    
