@@ -22,7 +22,7 @@ class N2yoSatelliteService:
 
         return satellites
 
-    def find_by_id(self, id_provider: str, latitude="-15.779528", longitude="-47.929686", altitude="0", seconds="300") -> SatelliteWithPositionsModel:
+    def find_by_id(self, id_provider: str, latitude="-15.779528", longitude="-47.929686", altitude="0", seconds="120") -> SatelliteWithPositionsModel:
         complementary_url = f"/positions/{id_provider}/{latitude}/{longitude}/{altitude}/{seconds}"
         response = requests.get(url = self.URL + complementary_url, params = self.PARAMS)
 
@@ -35,7 +35,7 @@ class N2yoSatelliteService:
         satellite.id_provider = data['info']['satid']
         positions = []
 
-        for i in range(300):
+        for i in range(120):
             positions.append(Position(
                 latitude = data['positions'][i]['satlatitude'],
                 longitude = data['positions'][i]['satlongitude'],
