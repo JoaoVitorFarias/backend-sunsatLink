@@ -57,7 +57,7 @@ class AntennaRepository:
     
     def find_first(self) -> Optional[AntennaPosition]:
         session = self.database()
-        data = session.query(AntennaDb).first()
+        data = session.query(AntennaDb).order_by(AntennaDb.created_at.desc()).first()
         if not data:
             return None
         
