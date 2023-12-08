@@ -50,7 +50,7 @@ def convertToSatellite(resource: SatelliteResource):
 
 def convertToSatelliteTrajectoryResource(satellite: SatelliteTrajectory):
     if (satellite.movimentation_command == 1):
-        time = 60
+        time = 10
     elif (satellite.movimentation_command == 2):
         time = int(satellite.time.total_seconds())
     else: 
