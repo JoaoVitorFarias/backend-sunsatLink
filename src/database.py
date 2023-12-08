@@ -11,10 +11,10 @@ SQLALCHEMY_DATABASE_URL = settings.db_connect_url
 if not getenv("TEST"):
     engine = create_engine(
         SQLALCHEMY_DATABASE_URL,
-        pool_size=500,
-        max_overflow=250,
+        pool_size=10000,
+        max_overflow=5000,
         pool_timeout=30,
-        pool_recycle=1000
+        pool_recycle=900
     )
 else:
     engine = Mock() 
