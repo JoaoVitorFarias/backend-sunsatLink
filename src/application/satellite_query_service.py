@@ -236,7 +236,7 @@ class SatelliteQueryService():
         if (elevation > 16200 or elevation < -16200):
             return 0
         
-        return elevation
+        return float(elevation)
     
     def find_positions(self, id_provider: str):
         antenna = self.__antenna_repository__.find_first()
