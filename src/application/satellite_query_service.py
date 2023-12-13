@@ -207,7 +207,7 @@ class SatelliteQueryService():
 
         trajectory.azimuth = self.calculate_azimuth(first_position.azimuth, last_position.azimuth)
 
-        trajectory.elevation = self.calculate_elevation(last_position.elevation) - self.calculate_elevation(first_position.elevation)
+        trajectory.elevation = self.calculate_elevation(last_position.elevation - first_position.elevation)
         trajectory.time = int((time2 - time1).total_seconds())
         trajectory.movimentation_command = 2
 
