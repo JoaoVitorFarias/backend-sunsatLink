@@ -154,7 +154,7 @@ class SatelliteQueryService():
           return self.calculate_trajectory(satellite, trajectory)
     
     def stop_position(self, satellite: SatelliteWithPositionsModel, trajectory: SatelliteTrajectory) -> SatelliteTrajectory:
-        self.__satellite_trajectory_repository__.delete()
+        self.__satellite_trajectory_repository__.delete_all()
         trajectory.azimuth = 0.0
         trajectory.elevation = 0.0
         trajectory.movimentation_command = 0

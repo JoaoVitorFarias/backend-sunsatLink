@@ -62,4 +62,11 @@ class SatelliteTrajectoryRepository:
         session.delete(data)
         session.commit()
 
+  def delete_all(self) -> None:
+    session = self.database()
+    session.query(SatelliteTrajectoryDb).delete()
+    session.commit()
+    session.close()
+
+
 assert isinstance(SatelliteTrajectoryRepository({}), satellite_trajectory_repository.SatelliteTrajectoryRepository)
