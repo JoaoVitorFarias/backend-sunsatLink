@@ -56,11 +56,8 @@ class SatelliteTrajectoryRepository:
   
   def delete(self) -> None:
     session = self.database()
-    data = data = session.query(SatelliteTrajectoryDb).filter(SatelliteTrajectoryDb.movimentation_command == 1).first()
-
-    if data is not None:
-        session.delete(data)
-        session.commit()
+    session.query(SatelliteTrajectoryDb).filter(SatelliteTrajectoryDb.movimentation_command == 1).delete()
+    session.commit()
 
   def delete_all(self) -> None:
     session = self.database()
