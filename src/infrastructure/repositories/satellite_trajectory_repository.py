@@ -16,8 +16,8 @@ class SatelliteTrajectoryRepository:
   def save(self, satellite_trajectory: SatelliteTrajectory) -> SatelliteTrajectory:
     
     satellite_trajectory_db = SatelliteTrajectoryDb()
-    satellite_trajectory_db.azimuth =  Numeric(asdecimal=False)(satellite_trajectory.azimuth)
-    satellite_trajectory_db.elevation =  Numeric(asdecimal=False)(satellite_trajectory.elevation)
+    satellite_trajectory_db.azimuth =  satellite_trajectory.azimuth
+    satellite_trajectory_db.elevation = satellite_trajectory.elevation
     satellite_trajectory_db.movimentation_command = satellite_trajectory.movimentation_command
     satellite_trajectory_db.time = satellite_trajectory.time
 
