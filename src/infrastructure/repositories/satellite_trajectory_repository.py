@@ -1,6 +1,6 @@
 from domain.repositories import satellite_trajectory_repository
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, Numeric
 from typing import Callable, Optional
 from application.model.satellite_trajectory import SatelliteTrajectory
 
@@ -16,8 +16,8 @@ class SatelliteTrajectoryRepository:
   def save(self, satellite_trajectory: SatelliteTrajectory) -> SatelliteTrajectory:
     
     satellite_trajectory_db = SatelliteTrajectoryDb()
-    satellite_trajectory_db.azimuth = satellite_trajectory.azimuth
-    satellite_trajectory_db.elevation = satellite_trajectory.elevation
+    satellite_trajectory_db.azimuth =  Numeric(asdecimal=False)(satellite_trajectory.azimuth)
+    satellite_trajectory_db.elevation =  Numeric(asdecimal=False)(satellite_trajectory.elevation)
     satellite_trajectory_db.movimentation_command = satellite_trajectory.movimentation_command
     satellite_trajectory_db.time = satellite_trajectory.time
 
@@ -35,8 +35,8 @@ class SatelliteTrajectoryRepository:
         
         trajectory = SatelliteTrajectory()
         trajectory.time = data.time
-        trajectory.azimuth = data.azimuth
-        trajectory.elevation = data.elevation
+        trajectory.azimuth = float(data.azimuth)
+        trajectory.elevation = float(data.elevation)
         trajectory.movimentation_command= data.movimentation_command
         
         return trajectory
@@ -47,8 +47,8 @@ class SatelliteTrajectoryRepository:
         if data:
           trajectory = SatelliteTrajectory()
           trajectory.time = data.time
-          trajectory.azimuth = data.azimuth
-          trajectory.elevation = data.elevation
+          trajectory.azimuth = float(data.azimuth)
+          trajectory.elevation = float(data.elevation)
           trajectory.movimentation_command = data.movimentation_command
           return trajectory
         else:
